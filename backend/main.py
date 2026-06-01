@@ -32,6 +32,22 @@ def create_tables():
     Base.metadata.create_all(bind=engine)
 
 
+# ─── Root Endpoint ────────────────────────────────────────────────────────────
+
+@app.get("/", tags=["Health"])
+def root():
+    return {
+        "message": "✅ InVex API is live!",
+        "docs": "/docs",
+        "version": "1.0.0",
+        "endpoints": {
+            "products": "/products",
+            "customers": "/customers",
+            "orders": "/orders",
+        }
+    }
+
+
 # ─── Helper: Build OrderResponse ─────────────────────────────────────────────
 
 def build_order_response(order: models.Order) -> schemas.OrderResponse:
