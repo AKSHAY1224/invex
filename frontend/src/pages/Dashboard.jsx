@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { getProducts, getCustomers, getOrders } from "../api/api";
 
+// ─── Skeleton helper ──────────────────────────────────────────────────────────
+function skeletonStyle(width, height) {
+  return {
+    width,
+    height,
+    borderRadius: 6,
+    background: "linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%)",
+    backgroundSize: "200% 100%",
+    animation: "skeleton-shimmer 1.4s infinite",
+  };
+}
+
 export default function Dashboard() {
   const [products, setProducts] = useState([]);
   const [customers, setCustomers] = useState([]);
@@ -30,11 +42,42 @@ export default function Dashboard() {
 
   const lowStockItems = products.filter((p) => p.quantity < 5);
 
+  // ─── Skeleton loading state ───────────────────────────────────────────────
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center" style={{ minHeight: "60vh" }}>
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div>
+        <div className="mb-4">
+          <div style={skeletonStyle(200, 28)} className="mb-2" />
+          <div style={skeletonStyle(140, 16)} />
+        </div>
+        <div className="row g-4 mb-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div className="col-sm-6 col-xl-3" key={i}>
+              <div className="card border-0 shadow-sm h-100">
+                <div className="card-body d-flex align-items-center gap-3 p-4">
+                  <div style={{ ...skeletonStyle(56, 56), borderRadius: 12 }} />
+                  <div>
+                    <div style={skeletonStyle(80, 12)} className="mb-2" />
+                    <div style={skeletonStyle(50, 28)} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="card border-0 shadow-sm">
+          <div className="card-header bg-white border-bottom py-3 px-4">
+            <div style={skeletonStyle(180, 20)} />
+          </div>
+          <div className="card-body p-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="d-flex gap-3 mb-3">
+                <div style={skeletonStyle("40%", 16)} />
+                <div style={skeletonStyle("20%", 16)} />
+                <div style={skeletonStyle("15%", 16)} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

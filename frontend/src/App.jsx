@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import BackendWakeup from "./components/BackendWakeup";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Customers from "./pages/Customers";
@@ -7,6 +8,7 @@ import Orders from "./pages/Orders";
 
 export default function App() {
   return (
+    <BackendWakeup>
     <BrowserRouter>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
         <div className="container-xl">
@@ -84,5 +86,6 @@ export default function App() {
         </Routes>
       </main>
     </BrowserRouter>
+    </BackendWakeup>
   );
 }
